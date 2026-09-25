@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -9,7 +7,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::orderBy('created_at','desc')->get();
         return view('tasks.index', compact('tasks'));
     }
 
@@ -23,15 +21,17 @@ class TaskController extends Controller
         $request->validate([
             'task_name' => 'required',
             'description' => 'nullable',
+            'due_date' => 'nullable|date',
         ]);
 
         Task::create([
             'task_name' => $request->task_name,
             'description' => $request->description,
+            'due_date' => $request->due_date,
             'status' => 'Pending'
         ]);
 
-        return redirect('/tasks')->with('success','Task created!');
+        return redirect()->away('https://stunning-umbrella-vprq44jxg5pq3px46-8000.app.github.dev/tasks');
     }
 
     public function edit(Task $task)
@@ -44,26 +44,28 @@ class TaskController extends Controller
         $request->validate([
             'task_name' => 'required',
             'description' => 'nullable',
+            'due_date' => 'nullable|date',
         ]);
 
         $task->update([
             'task_name' => $request->task_name,
             'description' => $request->description,
+            'due_date' => $request->due_date,
         ]);
 
-        return redirect('/tasks')->with('success','Task updated!');
+        return redirect()->away('https://stunning-umbrella-vprq44jxg5pq3px46-8000.app.github.dev/tasks');
     }
 
     public function destroy(Task $task)
     {
         $task->delete();
-        return redirect('/tasks')->with('success','Task deleted!');
+        return redirect()->away('https://stunning-umbrella-vprq44jxg5pq3px46-8000.app.github.dev/tasks');
     }
 
     public function toggle(Task $task)
     {
         $task->status = $task->status == 'Pending' ? 'Completed' : 'Pending';
         $task->save();
-        return redirect('/tasks');
+        return redirect()->away('https://stunning-umbrella-vprq44jxg5pq3px46-8000.app.github.dev/tasks');
     }
 }
