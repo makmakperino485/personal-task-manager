@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Task Manager</title>
-<style>body{font-family:Arial; max-width:800px; margin:20px auto} .card{border:1px solid #ddd; padding:15px; margin:10px 0; border-radius:8px; display:flex; justify-content:space-between} .btn{padding:8px 12px; border:none; border-radius:5px; color:white; text-decoration:none} .btn-blue{background:#0d6efd} .btn-green{background:#198754} .btn-red{background:#dc3545} .btn-gray{background:#6c757d}</style>
+<title>TaskFlow</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<h1>📝 Personal Task Manager</h1>
-<a href="/tasks/create" class="btn btn-blue">+ Add Task</a>
-@foreach($tasks as $task)
-<div class="card">
-<div><strong>{{ $task->task_name }}</strong><br>{{ $task->description }}<br><small>Due: {{ $task->due_date ?? 'No date' }} | {{ $task->status }}</small></div>
-<div>
-<form action="/tasks/{{ $task->id }}/toggle" method="POST" style="display:inline">@csrf @method('PATCH')<button class="btn {{ $task->status=='Pending'?'btn-green':'btn-gray' }}">{{ $task->status=='Pending'?'Complete':'Undo' }}</button></form>
-<a href="/tasks/{{ $task->id }}/edit" class="btn btn-blue">Edit</a>
-<form action="/tasks/{{ $task->id }}" method="POST" style="display:inline">@csrf @method('DELETE')<button class="btn btn-red">Delete</button></form>
+<div class="container">
+<div class="header">
+<div><h1>TaskFlow</h1><p>Organize your life, beautifully</p></div>
+<a href="/tasks/create" class="btn-add">+ New Task</a>
+</div>
+<div class="stats">
+<div class="stat-card"><h3>{{ $tasks->count() }}</h3><span>Total</span></div>
+<div class="stat-card"><h3>{{ $tasks->where('status','Pending')->count() }}</h3><span>Pending</span></div>
+<div class="stat-card"><h3>{{ $tasks->where('status','Completed')->count() }}</h3><span>Done</span></div>
+</div>
+@forelse($tasks as $task)
+<div class="task-card {{ $task->status=='Completed'?'completed':'' }}">
+<div class="task-info">
+<div class="task-name">{{ $task->task_name }}</div>
+@if($task->description)<div class="task-desc">{{ $task->description }}</div>@endif
+<div class="task-meta">
+<span class="badge {{ $task->status=='Pending'?'badge-pending':'badge-completed' }}">{{ $task->status }}</span>
+<span class="badge badge-date">📅 {{ $task->due_date ?? 'No due date' }}</span>
 </div>
 </div>
-@endforeach
+<div class="task-actions">
+<form action="/tasks/{{ $task->id }}/toggle" method="POST">@csrf @method('PATCH')<button class="btn btn-toggle">{{ $task->status=='Pending'?'✓ Done':'↩ Undo' }}</button></form>
+<a href="/tasks/{{ $task->id }}/edit" class="btn btn-edit">Edit</a>
+<form action="/tasks/{{ $task->id }}" method="POST" onsubmit="return confirm('Delete?')">@csrf @method('DELETE')<button class="btn btn-delete">Delete</button></form>
+</div>
+</div>
+@empty
+<div class="empty"><h2>✨ No tasks yet</h2><p>Create your first task!</p></div>
+@endforelse
+</div>
 </body>
 </html>

@@ -1,25 +1,51 @@
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-body { background: #f4f6f9; color: #333; padding: 20px; }
-.container { max-width: 900px; margin: auto; }
-.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-.header h1 { font-size: 28px; color: #1e293b; }
-.btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; font-size: 14px; display: inline-block; }
-.btn-blue { background: #2563eb; color: white; }
-.btn-green { background: #16a34a; color: white; }
-.btn-yellow { background: #eab308; color: white; }
-.btn-red { background: #dc2626; color: white; }
-.btn-gray { background: #e2e8f0; color: #334155; }
-.card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-.card.completed { opacity: 0.6; border-left: 5px solid #16a34a; }
-.card.pending { border-left: 5px solid #eab308; }
-.task-name { font-size: 18px; font-weight: 600; }
-.task-name.done { text-decoration: line-through; color: #94a3b8; }
-.task-meta { font-size: 13px; color: #64748b; margin-top: 5px; }
-.badge { padding: 3px 8px; border-radius: 20px; font-size: 12px; }
-.badge-pending { background: #fef3c7; color: #92400e; }
-.badge-completed { background: #dcfce7; color: #166534; }
-.actions { display: flex; gap: 8px; }
-.form-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-.form-box label { display: block; font-weight: 600; margin: 12px 0 5px; }
-.form-box input, .form-box textarea, .form-box select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; }
-.alert { background: #dcfce7; color: #166534; padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#0f0f13; color:white; min-height:100vh; padding:40px 20px; position:relative; overflow-x:hidden}
+body::before{content:''; position:fixed; top:-50%; left:-50%; width:200%; height:200%; background: radial-gradient(circle at 30% 20%, #7c3aed22 0%, transparent 50%), radial-gradient(circle at 80% 80%, #06b6d422 0%, transparent 50%); pointer-events:none; z-index:-1}
+.container{max-width:900px; margin:0 auto}
+.header{display:flex; justify-content:space-between; align-items:center; margin-bottom:40px; flex-wrap:wrap; gap:15px}
+.header h1{font-size:42px; font-weight:700; background: linear-gradient(135deg, #a78bfa, #22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+.header p{color:#9ca3af; margin-top:5px}
+.btn-add{background: linear-gradient(135deg, #7c3aed, #06b6d4); color:white; padding:14px 28px; border-radius:12px; text-decoration:none; font-weight:600; box-shadow:0 10px 20px #7c3aed33; transition:0.3s; display:inline-block}
+.btn-add:hover{transform:translateY(-2px); box-shadow:0 15px 30px #7c3aed55}
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:30px}
+.stat-card{background:#1a1a20; border:1px solid #2a2a35; border-radius:16px; padding:20px; text-align:center}
+.stat-card h3{font-size:28px; color:#a78bfa}
+.stat-card span{color:#9ca3af; font-size:13px}
+.task-card{background:#1a1a20; border:1px solid #2a2a35; border-radius:20px; padding:22px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; transition:0.3s; position:relative; overflow:hidden}
+.task-card::before{content:''; position:absolute; left:0; top:0; height:100%; width:4px; background:linear-gradient(#7c3aed, #06b6d4); opacity:0; transition:0.3s}
+.task-card:hover{transform:translateY(-3px); border-color:#3a3a4a; box-shadow:0 10px 30px #00000066}
+.task-card:hover::before{opacity:1}
+.task-card.completed{opacity:0.6}
+.task-card.completed .task-name{text-decoration:line-through; color:#6b7280}
+.task-info{flex:1}
+.task-name{font-size:18px; font-weight:600; margin-bottom:6px}
+.task-desc{color:#9ca3af; font-size:14px; margin-bottom:10px}
+.task-meta{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.badge{padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; letter-spacing:0.5px}
+.badge-pending{background:#f59e0b22; color:#fbbf24; border:1px solid #f59e0b33}
+.badge-completed{background:#10b98122; color:#34d399; border:1px solid #10b98133}
+.badge-date{background:#ffffff0d; color:#d1d5db; border:1px solid #ffffff11}
+.task-actions{display:flex; gap:8px; align-items:center}
+.btn{padding:9px 16px; border-radius:10px; border:none; cursor:pointer; font-weight:600; font-size:13px; transition:0.2s; text-decoration:none; display:inline-block}
+.btn-toggle{background:#ffffff0d; color:white; border:1px solid #ffffff15}
+.btn-toggle:hover{background:#ffffff15}
+.btn-edit{background:#3b82f622; color:#60a5fa; border:1px solid #3b82f633}
+.btn-delete{background:#ef444422; color:#f87171; border:1px solid #ef444433}
+.btn:hover{transform:scale(1.05)}
+.empty{text-align:center; padding:80px 20px; color:#6b7280}
+.empty h2{font-size:24px; margin-bottom:10px}
+
+/* FORM PAGES */
+.form-body{background:#0f0f13; color:white; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px}
+.form-card{background:#1a1a20; border:1px solid #2a2a35; border-radius:24px; padding:40px; width:100%; max-width:520px; box-shadow:0 20px 60px #00000088}
+.form-card h2{font-size:28px; margin-bottom:8px; background: linear-gradient(135deg, #a78bfa, #22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent}
+.form-card .sub{color:#9ca3af; margin-bottom:30px; font-size:14px}
+.form-card label{display:block; font-size:13px; font-weight:600; color:#d1d5db; margin-bottom:6px; margin-top:18px; letter-spacing:0.5px; text-transform:uppercase}
+.form-card input,.form-card textarea{width:100%; background:#0f0f13; border:1px solid #2a2a35; border-radius:12px; padding:14px 16px; color:white; font-size:15px; outline:none; transition:0.3s}
+.form-card input:focus,.form-card textarea:focus{border-color:#7c3aed; box-shadow:0 0 0 3px #7c3aed22}
+.form-card textarea{resize:none; height:100px}
+.form-row{display:flex; gap:12px; margin-top:30px}
+.btn-primary{flex:1; padding:14px; border-radius:12px; border:none; font-weight:600; cursor:pointer; background: linear-gradient(135deg, #7c3aed, #06b6d4); color:white; box-shadow:0 8px 20px #7c3aed33; transition:0.3s}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-secondary{flex:1; padding:14px; border-radius:12px; border:none; font-weight:600; cursor:pointer; background:#ffffff0d; color:#d1d5db; border:1px solid #ffffff15; text-align:center; text-decoration:none; display:inline-block}
