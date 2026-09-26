@@ -1,10 +1,15 @@
 # Personal Task Manager - TaskFlow
 
 Project Code: WST21-PM-2026-SF
+
 Student Name: [PERINO , MARK RYAN P.]
+
 Course & Year: [SECTION - 2 , 2ND YEAR BSIT]
+
 Database Used: SQLite (Laravel Default) - Also supports MySQL
+
 Submitted: 26 SEP 2026
+
 
 ## Features:
 - Add Task - Create new task with name, description, due date, status
