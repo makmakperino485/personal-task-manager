@@ -5,6 +5,12 @@
 <form action="/tasks" method="POST">@csrf
 <label>Task Name *</label><input type="text" name="task_name" placeholder="Ex: Finish Laravel Project" required>
 <label>Description</label><textarea name="description" placeholder="Add details..."></textarea>
+<label>Status</label>
+<select name="status">
+<option value="Pending">Pending</option>
+<option value="In Progress">In Progress</option>
+<option value="Completed">Completed</option>
+</select>
 <label>Due Date</label><input type="date" name="due_date">
 <div class="form-row"><a href="/tasks" class="btn-secondary">Cancel</a><button class="btn-primary">Create Task ✨</button></div>
 </form></div></body></html>

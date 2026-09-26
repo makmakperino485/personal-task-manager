@@ -22,12 +22,18 @@
 <div class="task-name">{{ $task->task_name }}</div>
 @if($task->description)<div class="task-desc">{{ $task->description }}</div>@endif
 <div class="task-meta">
-<span class="badge {{ $task->status=='Pending'?'badge-pending':'badge-completed' }}">{{ $task->status }}</span>
+<span class="badge {{ $task->status=='Pending'?'badge-pending':($task->status=='In Progress'?'badge-progress':'badge-completed') }}">{{ $task->status }}</span>
 <span class="badge badge-date">📅 {{ $task->due_date ?? 'No due date' }}</span>
 </div>
 </div>
 <div class="task-actions">
-<form action="/tasks/{{ $task->id }}/toggle" method="POST">@csrf @method('PATCH')<button class="btn btn-toggle">{{ $task->status=='Pending'?'✓ Done':'↩ Undo' }}</button></form>
+<form action="/tasks/{{ $task->id }}/status" method="POST">@csrf @method('PATCH')
+<select name="status" class="status-select" onchange="this.form.submit()">
+<option value="Pending" {{ $task->status=='Pending'?'selected':'' }}>Pending</option>
+<option value="In Progress" {{ $task->status=='In Progress'?'selected':'' }}>In Progress</option>
+<option value="Completed" {{ $task->status=='Completed'?'selected':'' }}>Completed</option>
+</select>
+</form>
 <a href="/tasks/{{ $task->id }}/edit" class="btn btn-edit">Edit</a>
 <form action="/tasks/{{ $task->id }}" method="POST" onsubmit="return confirm('Delete?')">@csrf @method('DELETE')<button class="btn btn-delete">Delete</button></form>
 </div>

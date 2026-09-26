@@ -22,13 +22,14 @@ class TaskController extends Controller
             'task_name' => 'required',
             'description' => 'nullable',
             'due_date' => 'nullable|date',
+            'status' => 'required'
         ]);
 
         Task::create([
             'task_name' => $request->task_name,
             'description' => $request->description,
             'due_date' => $request->due_date,
-            'status' => 'Pending'
+            'status' => $request->status
         ]);
 
         return redirect()->away('https://stunning-umbrella-vprq44jxg5pq3px46-8000.app.github.dev/tasks');
@@ -45,12 +46,14 @@ class TaskController extends Controller
             'task_name' => 'required',
             'description' => 'nullable',
             'due_date' => 'nullable|date',
+            'status' => 'required'
         ]);
 
         $task->update([
             'task_name' => $request->task_name,
             'description' => $request->description,
             'due_date' => $request->due_date,
+            'status' => $request->status,
         ]);
 
         return redirect()->away('https://stunning-umbrella-vprq44jxg5pq3px46-8000.app.github.dev/tasks');
@@ -64,7 +67,20 @@ class TaskController extends Controller
 
     public function toggle(Task $task)
     {
-        $task->status = $task->status == 'Pending' ? 'Completed' : 'Pending';
+        if ($task->status == 'Pending') {
+            $task->status = 'In Progress';
+        } elseif ($task->status == 'In Progress') {
+            $task->status = 'Completed';
+        } else {
+            $task->status = 'Pending';
+        }
+        $task->save();
+        return redirect()->away('https://stunning-umbrella-vprq44jxg5pq3px46-8000.app.github.dev/tasks');
+    }
+
+    public function updateStatus(Request $request, Task $task)
+    {
+        $task->status = $request->status;
         $task->save();
         return redirect()->away('https://stunning-umbrella-vprq44jxg5pq3px46-8000.app.github.dev/tasks');
     }

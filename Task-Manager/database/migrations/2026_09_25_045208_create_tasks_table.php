@@ -9,12 +9,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('task_name');
-            $table->text('description')->nullable();
-            $table->string('status')->default('Pending');
-            $table->date('due_date')->nullable();
-            $table->timestamps();
+            $table->id(); // Task ID - Auto increment
+            $table->string('task_name'); // Name of the task
+            $table->text('description')->nullable(); // Task details
+            $table->string('status')->default('Pending'); // Pending / Completed / In Progress
+            $table->date('due_date')->nullable(); // Task deadline
+            $table->timestamps(); // created_at & updated_at
         });
     }
 
